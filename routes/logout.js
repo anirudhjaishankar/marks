@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/logout',(req,res)=>{
+router.get('/',(req,res)=>{
     req.session.destroy(()=>{
         console.log('user logged out');
     });
-    res.send('User Logged out');
+    res.render('logout')
 });
 
 module.exports = router;

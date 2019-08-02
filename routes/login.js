@@ -2,20 +2,20 @@ var express = require('express');
 var router = express.Router();
 
 
-router.get('/login',(req,res)=>{
-    res.send('login');
+router.get('/',function(req, res, next){
+  res.render("login");
 });
 
-router.post('/login',(req,res)=>{
-    if(req.body.id == "abc" && req.body.password=="123"){
-        req.session.user = {    
+router.post('/',(req,res)=>{
+    if(req.body.id == "abc" && req.body.pass=="123"){
+        req.session.user = {
                                 id:"abc",
                                 password:"123"
                             };
-        res.redirect('/marks');                    
+        res.redirect('/marks');
     }else{
         res.send('Wrong credentials');
     }
-})
+});
 
 module.exports = router;
