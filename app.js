@@ -2,14 +2,25 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var session  = require('express-session');
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var session = require('express-session');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var signupRouter = require("./routes/signup");
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var displayMarksRouter = require('./routes/marks');
+var studentRouter = require('./routes/student');
 
 var app = express();
+
+//set up mongodb connection
+mongoose.connect("mongodb://localhost/college");
+var db = mongoose.connection;
+
+db.once('open',()=>{
+  console.log("mongoDB online");
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,12 +31,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret:"alpha"}))
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+app.use(session({
+  secret:'secret',
+  resave:false,
+  saveUninitialized:true,
+  cookie: {
+    expires: 600000
+  }
+}));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
 app.use('/login', loginRouter);
-app.use('/logout',logoutRouter);
-app.use('/marks',displayMarksRouter);
+app.use('/logout', logoutRouter);
+app.use('/marks', displayMarksRouter);
+app.use("/signup", signupRouter);
+app.use('/student', studentRouter);
 
 
 

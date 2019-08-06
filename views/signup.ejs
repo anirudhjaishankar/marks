@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Signup Page</title>
+    </head>
+    <body>
+        <h1>Signup Form</h1>
+        <form action="/signup" method="POST">
+            <label>Username:</label>
+            <input type="text" name="username">
+            <br/>
+            <label>Access Type:</label>
+            <select name="access">
+                <option value="student">Student</option>
+                <option value="staff">Staff</option>
+                <option value="admin">Admin</option>
+            </select>
+            <br/>
+            <label>Password:</label>
+            <input type="password" name="password">
+            <button>Submit</button>
+        </form>
+    </body>
+</html>
